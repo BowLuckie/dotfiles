@@ -14,7 +14,7 @@ end, { desc = "Lazygit (root)" })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "rust",
   callback = function()
-    vim.keymap.set({ "n", "i" }, "<F6>", function()
+    vim.keymap.set({ "n", "i" }, "<F4>", function()
       vim.cmd("w")
       local cwd = vim.fn.expand("%:p:h")
       Snacks.terminal("cargo run; pause", { cwd = cwd })

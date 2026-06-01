@@ -4,15 +4,12 @@ return {
   config = function()
   local dap = require("dap")
   local dapui = require("dapui")
-
   dap.listeners.after.event_terminated["restore_terminal"] = function()
     vim.cmd("mode")
   end
-
   dap.listeners.after.event_exited["restore_terminal"] = function()
     vim.cmd("mode")
   end
-
     dap.adapters.codelldb = {
       type = "server",
       port = "${port}",
@@ -21,14 +18,12 @@ return {
         args = { "--port", "${port}" },
       },
     }
-
     dap.configurations.rust = {
       {
         name = "Launch",
         type = "codelldb",
         request = "launch",
         program = function()
-          -- walk up from current file to find Cargo.toml
           local path = vim.fn.expand("%:p:h")
           local root = path
           while true do
@@ -42,9 +37,7 @@ return {
             end
             root = parent
           end
-
           vim.fn.system("cargo build 2>&1")
-
           local binary = vim.fn.fnamemodify(root, ":t")
           local cargo = io.open(root .. "\\Cargo.toml", "r")
           if cargo then
@@ -54,11 +47,14 @@ return {
             end
             cargo:close()
           end
-
           return root .. "\\target\\debug\\" .. binary .. ".exe"
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
+        sourceLanguages = { "rust" },
+        initCommands = {
+          "settings set target.inline-breakpoint-strategy always",
+        },
       },
     }
   end,
