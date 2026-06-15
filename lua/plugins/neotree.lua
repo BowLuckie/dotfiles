@@ -9,7 +9,7 @@ return {
     },
     opts = {
       sources = { "filesystem", "buffers", "git_status" },
-      open_files_do_not_replace_types = { "terminal", "trouble", "trouble", "qf", "outline" },
+      open_files_do_not_replace_types = { "terminal", "trouble", "qf", "outline" },
       filesystem = {
         bind_to_cwd = false,
         follow_current_file = { enabled = true },
@@ -37,24 +37,30 @@ return {
           ["p"] = { "toggle_preview", config = { use_float = false } },
         },
       },
-    default_component_configs = {
-      indent = {
-        with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-        expander_collapsed = "",
-        expander_expanded = "",
-        expander_highlight = "neotreeexpander",
-      },
-      git_status = {
-        symbols = {
-          unstaged = "",
-          staged = "󰱒",
-          untracked = "󰐕"
+      default_component_configs = {
+        indent = {
+          with_expanders = true,
+          expander_collapsed = "",
+          expander_expanded = "",
+          expander_highlight = "neotreeexpander",
+        },
+        git_status = {
+          symbols = {
+            unstaged = "",
+            staged = "󰱒",
+            untracked = "󰐕",
+          },
         },
       },
     },
-  },
     keys = {
       { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Explorer" },
+    },
+  },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      explorer = { enabled = false },
     },
   },
 }

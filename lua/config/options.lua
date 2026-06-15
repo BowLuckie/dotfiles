@@ -16,7 +16,7 @@ vim.opt.scrolloff = 8
 
 vim.opt.swapfile = false
 
-vim.g.root_spec = {"cwd"}
+vim.g.root_spec = { "cwd" }
 
 vim.opt.autowrite = true
 vim.opt.autowriteall = true
@@ -40,3 +40,5 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.g.snacks_explorer = false
+
+vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Explorer (NeoTree)" })
