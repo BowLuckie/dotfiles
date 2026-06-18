@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 vim.keymap.set("n", "<F5>", "<cmd>DapContinue<cr>", { desc = "Debug: Continue" })
 
-vim.keymap.set("i", "<A-h>", "<Left>",  { desc = "Move left" })
+vim.keymap.set("i", "<A-h>", "<Left>", { desc = "Move left" })
 vim.keymap.set("n", "<leader>gg", function()
   local root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
   if vim.v.shell_error == 0 then
@@ -12,9 +12,8 @@ vim.keymap.set("n", "<leader>gg", function()
   Snacks.lazygit()
 end, { desc = "Lazygit (root)" })
 
-
-vim.keymap.set("i", "<A-j>", "<Down>",  { desc = "Move down" })
-vim.keymap.set("i", "<A-k>", "<Up>",    { desc = "Move up" })
+vim.keymap.set("i", "<A-j>", "<Down>", { desc = "Move down" })
+vim.keymap.set("i", "<A-k>", "<Up>", { desc = "Move up" })
 vim.keymap.set("i", "<A-l>", "<Right>", { desc = "Move right" })
 
 vim.keymap.set("n", "<A-J>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
@@ -40,40 +39,20 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- f4
 
-local run_term = nil
-
-local function open_or_run(cmd, cwd)
-  if run_term then
-    Snacks.terminal.send(run_term, cmd .. "\n")
-    return
-  end
-
-  run_term = Snacks.terminal(cmd, {
-    cwd = cwd,
-    win = {
-      position = "bottom",
-      height = 15,
-    },
-  })
-end
-
 vim.keymap.set("n", "<F4>", function()
   vim.cmd("w")
-
   if vim.fn.filereadable("package.json") == 1 then
-    Snacks.terminal("npm run dev; pause", { cwd = vim.fn.getcwd() })
+    Snacks.terminal("npm run dev; echo 'Press enter to exit...'; read", { cwd = vim.fn.getcwd() })
     return
   end
-
   if vim.bo.filetype == "rust" then
-    Snacks.terminal("cargo run; pause", { cwd = vim.fn.expand("%:p:h") })
+    Snacks.terminal("cargo run; echo 'Press enter to exit...'; read", { cwd = vim.fn.expand("%:p:h") })
     return
   end
-
   if vim.bo.filetype == "javascript" then
-    Snacks.terminal("node " .. vim.fn.expand("%"), { cwd = vim.fn.expand("%:p:h") })
+    Snacks.terminal("node " .. vim.fn.expand("%") .. "; echo 'Press enter to exit...'; read", { cwd = vim.fn.expand("%:p:h") })
+    return
   end
-
   vim.notify(
     "No run config for filetype: " .. vim.bo.filetype,
     vim.log.levels.WARN
