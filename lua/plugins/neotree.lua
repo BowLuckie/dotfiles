@@ -11,7 +11,7 @@ return {
       sources = { "filesystem", "buffers", "git_status" },
       open_files_do_not_replace_types = { "terminal", "trouble", "qf", "outline" },
       filesystem = {
-        bind_to_cwd = false,
+        bind_to_cwd = true,
         follow_current_file = { enabled = true },
         use_libuv_file_watcher = true,
       },
@@ -53,14 +53,16 @@ return {
         },
       },
     },
-    keys = {
-      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Explorer" },
-    },
   },
   {
     "folke/snacks.nvim",
     opts = {
       explorer = { enabled = false },
+    },
+
+    keys = {
+      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle Neotree" },
+      { "<leader>E", "<cmd>Neotree toggle buffers<cr>", desc = "Toggle Neotree (Buffers)" },
     },
   },
 }

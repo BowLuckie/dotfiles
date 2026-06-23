@@ -19,15 +19,6 @@ vim.keymap.set("i", "<A-l>", "<Right>", { desc = "Move right" })
 vim.keymap.set("n", "<A-J>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 vim.keymap.set("n", "<A-K>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 
-vim.keymap.set("i", "<Tab>", function()
-  local blink = require("blink.cmp")
-  if blink.is_visible() then
-    blink.accept()
-  else
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
-  end
-end, { desc = "Tab autocomplete" })
-
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "html", "javascript", "css", "json" },
   callback = function()
