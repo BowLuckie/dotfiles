@@ -1,1 +1,3 @@
-FUCK LAZYVIM
+not actually .nvimrc, but my .config/nvim folder.
+
+enjoy
