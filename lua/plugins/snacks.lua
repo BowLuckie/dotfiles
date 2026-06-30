@@ -4,7 +4,6 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-      -- All other utilities remain enabled
       bigfile = { enabled = true },
       indent = { enabled = true },
       input = { enabled = true },
@@ -16,7 +15,7 @@ return {
       statuscolumn = { enabled = true },
       words = { enabled = true },
       explorer = { enabled = false },
-      -- Dashboard is omitted here so it doesn't conflict
+      dashboard = { enabled = true },
     },
     keys = {
       {

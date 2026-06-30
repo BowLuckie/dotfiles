@@ -62,6 +62,14 @@ return {
             { "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "x" } },
             { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = "n" },
             { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
+
+            {
+              "<leader>cl",
+              function()
+                require("snacks").picker.lsp_config()
+              end,
+              desc = "LSP Config",
+            },
           },
         },
         lua_ls = {
