@@ -9,6 +9,14 @@ return {
       end,
       desc = "Find Files",
     },
+
+    {
+      "<leader><leader>",
+      function()
+        require("snacks").picker.files()
+      end,
+      desc = "Find Files",
+    },
     {
       "<leader>fg",
       function()
