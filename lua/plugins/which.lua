@@ -2,6 +2,6 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = { preset = "modern", delay = 1000 },
   },
 }
