@@ -1,3 +1,5 @@
 not actually .nvimrc, but my .config/nvim folder.
 
-enjoy
+its pretty much a LazyVim fork but without the mirror.
+
+enjoy. 
