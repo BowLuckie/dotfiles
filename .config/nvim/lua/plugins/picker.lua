@@ -49,7 +49,7 @@ return {
       "<leader>fc",
       function()
         require("snacks").picker.files({
-          cwd = vim.fs.normalize(vim.fn.expand("~/.dotfiles/nvim")),
+          cwd = vim.fs.normalize(vim.fn.expand("~/.dotfiles/.config/nvim")),
         })
       end,
       desc = "Find Config File",
