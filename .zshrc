@@ -1,7 +1,13 @@
 ZSH=/usr/share/oh-my-zsh/
 
 # List of plugins used
-plugins=( git sudo zsh-autosuggestions zsh-syntax-highlighting )
+plugins=(
+    git
+    sudo
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-vi-mode
+)
 source $ZSH/oh-my-zsh.sh
 
 # In case a command is not found, try to find the package that has it
