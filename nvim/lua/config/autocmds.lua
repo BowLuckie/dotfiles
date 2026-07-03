@@ -28,3 +28,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     })
   end,
 })
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function(args)
+    local buf = args.buf
+    local name = vim.api.nvim_buf_get_name(buf)
+    local real = vim.uv.fs_realpath(name)
+
+    if real and real ~= name then
+      vim.api.nvim_buf_set_name(buf, real)
+    end
+  end,
+})
