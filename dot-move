@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+set -e
+
+DOTFILES="$HOME/.dotfiles"
+
+if [ -z "$1" ]; then
+  echo "usage: dot-move <file>"
+  exit 1
+fi
+
+SRC="$1"
+
+if [ ! -e "$SRC" ]; then
+  echo "file does not exist: $SRC"
+  exit 1
+fi
+
+# resolve absolute path
+SRC_ABS="$(realpath "$SRC")"
+
+# path relative to home
+REL_PATH="${SRC_ABS#"$HOME"/}"
+
+DEST="$DOTFILES/$REL_PATH"
+
+DEST_DIR="$(dirname "$DEST")"
+
+mkdir -p "$DEST_DIR"
+
+# move file into dotfiles repo
+mv "$SRC_ABS" "$DEST"
+
+# create symlink back
+ln -s "$DEST" "$SRC_ABS"
+
+echo "moved: $SRC_ABS -> $DEST"
+echo "symlink created at original location"
