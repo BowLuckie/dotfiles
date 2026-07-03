@@ -18,12 +18,6 @@ return {
         bind_to_cwd = true,
         follow_current_file = { enabled = true },
         use_libuv_file_watcher = true,
-
-        filtered_items = {
-          visible = true,
-          hide_dotfiles = false,
-          hide_gitignored = true,
-        },
       },
       window = {
         mappings = {

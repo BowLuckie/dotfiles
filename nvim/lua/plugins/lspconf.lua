@@ -120,8 +120,21 @@ return {
           filetypes = { "arduino" },
           mason = false,
         },
+        nixd = {
+          mason = false,
+          cmd = { "nixd" },
+          settings = {
+            nixd = {
+              nixpkgs = {
+                expr = "import <nixpkgs> {}",
+              },
+            },
+          },
+        },
       },
       setup = {},
+
+      -- rust is done through plugins/rust.lua, rustaceanvim
     }
     return ret
   end,

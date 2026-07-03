@@ -12,6 +12,7 @@ return {
         typescript = { "prettier" },
         html = { "prettier" },
         css = { "prettier" },
+	nix = { "nixfmt" }
       },
       format_on_save = {
         timeout_ms = 500,
