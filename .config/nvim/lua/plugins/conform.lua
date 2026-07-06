@@ -12,7 +12,8 @@ return {
         typescript = { "prettier" },
         html = { "prettier" },
         css = { "prettier" },
-	nix = { "nixfmt" }
+        nix = { "nixfmt" },
+        ocaml = { "ocamlformat" },
       },
       format_on_save = {
         timeout_ms = 500,

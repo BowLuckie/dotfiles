@@ -27,13 +27,11 @@ return {
       transparent_mode = false,
     },
     config = function(_, opts)
-      -- VERY IMPORTANT: Setup runs BEFORE applying the colorscheme
       require("gruvbox").setup(opts)
       vim.cmd.colorscheme("gruvbox")
 
       local palette = require("gruvbox").palette
 
-      -- blink.cmp colors
       vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = palette.dark1, fg = palette.light1 })
       vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = palette.dark4 })
       vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = palette.dark3 })
@@ -66,6 +64,8 @@ return {
       vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { underline = true, sp = palette.bright_aqua })
       vim.api.nvim_set_hl(0, "SpellBad", { underline = true, sp = palette.bright_red })
       vim.api.nvim_set_hl(0, "SpellCap", { underline = true, sp = palette.bright_blue })
+
+      vim.api.nvim_set_hl(0, "MatchParen", { fg = palette.bright_yellow, bold = true })
 
       vim.api.nvim_set_hl(0, "IncSearch", { bg = palette.neutral_orange, fg = palette.dark0 })
       -- selection-background = #d65d0e

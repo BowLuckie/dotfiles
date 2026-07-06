@@ -5,8 +5,9 @@ return {
     "mason.nvim",
     { "mason-org/mason-lspconfig.nvim", config = function() end },
   },
+
   opts = function()
-    local ret = {
+    return {
       diagnostics = {
         underline = true,
         update_in_insert = false,
@@ -25,20 +26,25 @@ return {
           },
         },
       },
+
       inlay_hints = {
         enabled = true,
         exclude = { "vue" },
       },
+
       codelens = {
         enabled = false,
       },
+
       folds = {
         enabled = false,
       },
+
       format = {
         formatting_options = nil,
         timeout_ms = nil,
       },
+
       servers = {
         ["*"] = {
           capabilities = {
@@ -49,6 +55,7 @@ return {
               },
             },
           },
+
           keys = {
             { "gd", vim.lsp.buf.definition, desc = "Goto Definition" },
             {
@@ -60,14 +67,29 @@ return {
               nowait = true,
             },
             { "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
-            { "gy", vim.lsp.buf.type_definition, desc = "Goto T[y]pe Definition" },
+            { "gy", vim.lsp.buf.type_definition, desc = "Goto Type Definition" },
             { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
             { "K", vim.lsp.buf.hover, desc = "Hover" },
             { "gK", vim.lsp.buf.signature_help, desc = "Signature Help" },
             { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help" },
-            { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "x" } },
-            { "<leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "x" } },
-            { "<leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = "n" },
+
+            {
+              "<leader>ca",
+              vim.lsp.buf.code_action,
+              desc = "Code Action",
+              mode = { "n", "x" },
+            },
+            {
+              "<leader>cc",
+              vim.lsp.codelens.run,
+              desc = "Run Codelens",
+              mode = { "n", "x" },
+            },
+            {
+              "<leader>cC",
+              vim.lsp.codelens.refresh,
+              desc = "Refresh Codelens",
+            },
             { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
 
             {
@@ -77,23 +99,32 @@ return {
               end,
               desc = "LSP Config",
             },
+            {
+              "]]",
+              function()
+                require("snacks").words.jump(1, true)
+              end,
+              desc = "Next Reference",
+            },
+            {
+              "[[",
+              function()
+                require("snacks").words.jump(-1, true)
+              end,
+              desc = "Prev Reference",
+            },
           },
         },
+
         lua_ls = {
           settings = {
             Lua = {
               workspace = {
                 checkThirdParty = false,
               },
-              codeLens = {
-                enable = true,
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-              doc = {
-                privateName = { "^_" },
-              },
+              codeLens = { enable = true },
+              completion = { callSnippet = "Replace" },
+              doc = { privateName = { "^_" } },
               hint = {
                 enable = true,
                 setType = false,
@@ -105,6 +136,7 @@ return {
             },
           },
         },
+
         arduino_language_server = {
           cmd = {
             "arduino-language-server",
@@ -120,26 +152,22 @@ return {
           filetypes = { "arduino" },
           mason = false,
         },
-        nixd = {
-          mason = false,
-          cmd = { "nixd" },
+
+        ocamllsp = {
           settings = {
-            nixd = {
-              nixpkgs = {
-                expr = "import <nixpkgs> {}",
-              },
-            },
+            codelens = { enable = true },
+            inlayHints = { typeAnnotations = true },
+            diagnostics = { enable = true },
           },
+          mason = false,
         },
       },
-      setup = {},
 
-      -- rust is done through plugins/rust.lua, rustaceanvim
+      setup = {},
     }
-    return ret
   end,
+
   config = function(_, opts)
-    -- attach lsp-only keymaps per-buffer, scoped to capability
     local capability_for_key = {
       ["gd"] = "textDocument/definition",
       ["gr"] = "textDocument/references",
@@ -155,91 +183,67 @@ return {
       ["<leader>cr"] = "textDocument/rename",
     }
 
-    vim.api.nvim_create_autocmd("LspAttach", {
-      callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if not client then
-          return
-        end
-        local star = opts.servers["*"]
-        if not (star and star.keys) then
-          return
-        end
-        for _, key in ipairs(star.keys) do
-          local method = capability_for_key[key[1]]
-          if not method or client:supports_method(method) then
-            local mode = key.mode or "n"
-            vim.keymap.set(mode, key[1], key[2], { desc = key.desc, buffer = args.buf })
-          end
-        end
-      end,
-    })
-
-    -- inlay hints
-    if opts.inlay_hints.enabled then
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local buffer = args.buf
-          if
-            vim.api.nvim_buf_is_valid(buffer)
-            and vim.bo[buffer].buftype == ""
-            and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
-          then
-            local client = vim.lsp.get_client_by_id(args.data.client_id)
-            if client and client:supports_method("textDocument/inlayHint") then
-              vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
-            end
-          end
-        end,
-      })
-    end
-
-    -- folds
-    if opts.folds.enabled then
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client and client:supports_method("textDocument/foldingRange") then
-            vim.wo.foldmethod = "expr"
-            vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
-          end
-        end,
-      })
-    end
-
-    -- code lens
-    if opts.codelens.enabled and vim.lsp.codelens then
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client and client:supports_method("textDocument/codeLens") then
-            vim.lsp.codelens.refresh()
-            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-              buffer = args.buf,
-              callback = vim.lsp.codelens.refresh,
-            })
-          end
-        end,
-      })
-    end
-
-    -- diagnostics
     vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
     if opts.servers["*"] then
       vim.lsp.config("*", opts.servers["*"])
     end
 
+    vim.api.nvim_create_autocmd("LspAttach", {
+      callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then
+          return
+        end
+
+        local buf = args.buf
+        local star = opts.servers["*"]
+        local keys = star and star.keys or {}
+
+        for _, key in ipairs(keys) do
+          local method = capability_for_key[key[1]]
+          if not method or client:supports_method(method) then
+            vim.keymap.set(key.mode or "n", key[1], key[2], {
+              buffer = buf,
+              desc = key.desc,
+              nowait = key.nowait,
+            })
+          end
+        end
+      end,
+    })
+
+    if opts.inlay_hints.enabled then
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local buf = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+          if
+            vim.api.nvim_buf_is_valid(buf)
+            and vim.bo[buf].buftype == ""
+            and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buf].filetype)
+            and client
+            and client:supports_method("textDocument/inlayHint")
+          then
+            vim.lsp.inlay_hint.enable(true, { bufnr = buf })
+          end
+        end,
+      })
+    end
+
     local have_mason = pcall(require, "mason-lspconfig")
     local mason_all = have_mason
         and vim.tbl_keys(require("mason-lspconfig.mappings").get_mason_map().lspconfig_to_package)
       or {}
+
     local mason_exclude = {}
 
     local function configure(server)
       if server == "*" then
         return false
       end
+
       local sopts = opts.servers[server]
       sopts = sopts == true and {} or (not sopts) and { enabled = false } or sopts
 
@@ -249,6 +253,7 @@ return {
       end
 
       local use_mason = sopts.mason ~= false and vim.tbl_contains(mason_all, server)
+
       local setup = opts.setup[server] or opts.setup["*"]
       if setup and setup(server, sopts) then
         mason_exclude[#mason_exclude + 1] = server
@@ -258,14 +263,18 @@ return {
           vim.lsp.enable(server)
         end
       end
+
       return use_mason
     end
 
     local install = vim.tbl_filter(configure, vim.tbl_keys(opts.servers))
+
     if have_mason then
       require("mason-lspconfig").setup({
         ensure_installed = install,
-        automatic_enable = { exclude = vim.list_extend(mason_exclude, { "rust_analyzer" }) },
+        automatic_enable = {
+          exclude = vim.list_extend(mason_exclude, { "rust_analyzer" }),
+        },
       })
     end
   end,

@@ -50,6 +50,13 @@ vim.g.snacks_explorer = false
 
 vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Explorer (NeoTree)" })
 
+vim.g.no_ocaml_maps = 1
+
+vim.opt_local.tabstop = 2
+vim.opt_local.shiftwidth = 2
+vim.opt_local.softtabstop = 2
+vim.opt_local.expandtab = true
+
 -- shim for telescope previewer compat with nvim-treesitter main branch
 if not vim.treesitter.language.ft_to_lang then
   vim.treesitter.language.ft_to_lang = function(ft)
