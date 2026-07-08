@@ -63,7 +63,6 @@ vim.keymap.set("n", "<F4>", function()
 end)
 
 -- better up/down
--- better up/down
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
@@ -102,15 +101,6 @@ vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-vim.keymap.set("n", "<leader>bd", function()
-  Snacks.bufdelete()
-end, { desc = "Delete Buffer" })
-vim.keymap.set("n", "<leader>bo", function()
-  Snacks.bufdelete.other()
-end, { desc = "Delete Other Buffers" })
-vim.keymap.set("n", "<leader>bi", function()
-  Snacks.bufdelete.invisible()
-end, { desc = "Delete Invisible Buffers" })
 vim.keymap.set("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
 -- Clear search and stop snippet on escape
@@ -223,40 +213,6 @@ if vim.lsp.inlay_hint then
   Snacks.toggle.inlay_hints():map("<leader>uh")
 end
 
--- lazygit and git pickers
-if vim.fn.executable("lazygit") == 1 then
-  vim.keymap.set("n", "<leader>gg", function()
-    Snacks.lazygit({ cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1] })
-  end, { desc = "Lazygit (Root Dir)" })
-  vim.keymap.set("n", "<leader>gG", function()
-    Snacks.lazygit()
-  end, { desc = "Lazygit (cwd)" })
-end
-
-vim.keymap.set("n", "<leader>gL", function()
-  Snacks.picker.git_log()
-end, { desc = "Git Log (cwd)" })
-vim.keymap.set("n", "<leader>gb", function()
-  Snacks.picker.git_log_line()
-end, { desc = "Git Blame Line" })
-vim.keymap.set("n", "<leader>gf", function()
-  Snacks.picker.git_log_file()
-end, { desc = "Git Current File History" })
-vim.keymap.set("n", "<leader>gl", function()
-  Snacks.picker.git_log({ cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1] })
-end, { desc = "Git Log" })
-vim.keymap.set({ "n", "x" }, "<leader>gB", function()
-  Snacks.gitbrowse()
-end, { desc = "Git Browse (open)" })
-vim.keymap.set({ "n", "x" }, "<leader>gY", function()
-  Snacks.gitbrowse({
-    open = function(url)
-      vim.fn.setreg("+", url)
-    end,
-    notify = false,
-  })
-end, { desc = "Git Browse (copy)" })
-
 -- quit
 vim.keymap.set("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
@@ -266,20 +222,6 @@ vim.keymap.set("n", "<leader>uI", function()
   vim.treesitter.inspect_tree()
   vim.api.nvim_input("I")
 end, { desc = "Inspect Tree" })
-
--- floating terminal
-vim.keymap.set("n", "<leader>fT", function()
-  Snacks.terminal()
-end, { desc = "Terminal (cwd)" })
-vim.keymap.set("n", "<leader>ft", function()
-  Snacks.terminal(nil, { cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1] })
-end, { desc = "Terminal (Root Dir)" })
-vim.keymap.set({ "n", "t" }, "<C-/>", function()
-  Snacks.terminal.focus()
-end, { desc = "Terminal (Root Dir)" })
-vim.keymap.set({ "n", "t" }, "<C-_>", function()
-  Snacks.terminal.focus()
-end, { desc = "which_key_ignore" })
 
 -- windows
 vim.keymap.set("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
@@ -298,7 +240,4 @@ vim.keymap.set("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
--- colorscheme picker
-vim.keymap.set("n", "<leader>uC", function()
-  Snacks.picker.colorschemes()
-end, { desc = "Colorschemes" })
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")

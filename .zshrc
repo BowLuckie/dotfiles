@@ -90,10 +90,6 @@ alias .5='cd ../../../../..'
 # Always mkdir a path
 alias mkdir='mkdir -p'
 
-# Show fastfetch on every new terminal, except inside editors
-if [[ "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "Code" && "$TERM_PROGRAM" != "Zed" && "$TERM" != "xterm-256color" ]]; then
-  fastfetch
-fi
 
 export BROWSER=brave
 export XDG_DEFAULT_BROWSER=brave
@@ -132,3 +128,20 @@ eval "$(oh-my-posh init zsh --config /usr/share/oh-my-posh/themes/gruvbox.json)"
 # This section can be safely removed at any time if needed.
 [[ ! -r '/home/bowluckie/.opam/opam-init/init.zsh' ]] || source '/home/bowluckie/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
+
+fastfetch_load() {
+    local min_cols=100
+    local min_lines=24
+
+    if (( COLUMNS < min_cols || LINES < min_lines )); then
+        command fastfetch --config ~/.config/fastfetch/logo-only.jsonc
+    else
+        command fastfetch --config ~/.config/fastfetch/config.jsonc
+    fi
+}
+
+
+# Show fastfetch on every new terminal, except inside editors
+if [[ "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "Code" && "$TERM_PROGRAM" != "Zed" && "$TERM" != "xterm-256color" ]]; then
+  fastfetch_load
+fi

@@ -5,6 +5,7 @@ return {
     branch = "main",
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
+    keys = { { "S", false, mode = "v" } },
     config = function()
       require("nvim-treesitter").setup()
       vim.api.nvim_create_autocmd("FileType", {
