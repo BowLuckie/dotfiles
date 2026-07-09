@@ -25,7 +25,7 @@ vim.keymap.set("n", "<A-K>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
-vim.keymap.set({ "n" }, "<leader>z", "<cmd>w!<cr>", { desc = "Save" })
+vim.keymap.set({ "n" }, "<leader>z", "<cmd>wa!<cr>", { desc = "Save" })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "html", "javascript", "css", "json" },
