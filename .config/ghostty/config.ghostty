@@ -63,3 +63,6 @@ keybind = ctrl+shift+w=close_surface
 keybind = alt+enter=toggle_fullscreen
 
 keybind = ctrl+shift+n=new_window
+
+keybind = ctrl+shift+k=scroll_page_up
+keybind = ctrl+shift+j=scroll_page_down

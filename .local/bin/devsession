@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+if tmux has-session -t dev 2>/dev/null; then
+  tmux attach -t dev
+else
+  tmux new-session -d -s dev -n nvim
+  tmux send-keys -t dev:nvim 'nvim' C-m
+  tmux new-window -t dev -n term
+  tmux attach -t dev
+fi
