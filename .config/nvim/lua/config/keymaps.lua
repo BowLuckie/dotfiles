@@ -241,3 +241,23 @@ vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" 
 vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+vim.keymap.set("n", "<leader>t", function()
+  -- look for an existing terminal buffer
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[buf].buftype == "terminal" then
+      -- check if it's already open in a window
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_buf(win) == buf then
+          vim.api.nvim_set_current_win(win)
+          return
+        end
+      end
+      -- exists but not visible, open it in current window
+      vim.api.nvim_set_current_buf(buf)
+      return
+    end
+  end
+  -- no terminal buffer exists, create one
+  vim.cmd("term")
+end, { desc = "Toggle Terminal Buffer" })
