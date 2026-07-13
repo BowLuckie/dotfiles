@@ -40,28 +40,6 @@ map("n", "<leader>'", function()
   require("core.utils.toggle").surround_quotes()
 end, { desc = "Toggle quotes cur word" })
 
--- f4
-
-vim.keymap.set("n", "<F4>", function()
-  vim.cmd("w")
-  if vim.fn.filereadable("package.json") == 1 then
-    Snacks.terminal("npm run dev; echo 'Press enter to exit...'; read", { cwd = vim.fn.getcwd() })
-    return
-  end
-  if vim.bo.filetype == "rust" then
-    Snacks.terminal("cargo run; echo 'Press enter to exit...'; read", { cwd = vim.fn.expand("%:p:h") })
-    return
-  end
-  if vim.bo.filetype == "javascript" then
-    Snacks.terminal(
-      "node " .. vim.fn.expand("%") .. "; echo 'Press enter to exit...'; read",
-      { cwd = vim.fn.expand("%:p:h") }
-    )
-    return
-  end
-  vim.notify("No run config for filetype: " .. vim.bo.filetype, vim.log.levels.WARN)
-end)
-
 -- better up/down
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -261,3 +239,4 @@ vim.keymap.set("n", "<leader>t", function()
   -- no terminal buffer exists, create one
   vim.cmd("term")
 end, { desc = "Toggle Terminal Buffer" })
+
