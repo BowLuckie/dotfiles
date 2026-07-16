@@ -66,3 +66,6 @@ keybind = ctrl+shift+n=new_window
 
 keybind = ctrl+shift+k=scroll_page_up
 keybind = ctrl+shift+j=scroll_page_down
+
+
+command = tmux

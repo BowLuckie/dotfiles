@@ -17,6 +17,19 @@ return {
         },
         lualine_x = {
           { "diff" },
+          {
+            update = { "User", pattern = "ClocStatusUpdated" },
+            function()
+              local status = require("cloc").get_status()
+              if status.statusCode == "loading" then
+                return "Clocing..."
+              end
+              if status.statusCode == "error" then
+                return "Error"
+              end
+              return status.data[1].code .. " LOC"
+            end,
+          },
         },
         lualine_y = {
           { "progress", separator = " ", padding = { left = 1, right = 0 } },
@@ -24,24 +37,11 @@ return {
         },
         lualine_z = {
           function()
-            return " " .. os.date("%I:%M"):gsub("^0", "")
+            local time = os.date("%I:%M") --[[@as string]]
+            return " " .. time:gsub("^0", "")
           end,
         },
       },
     },
   },
 }
-
---   {
---     "nvim-lualine/lualine.nvim",
---     opts = {
---       sections = {
---         lualine_z = {
---           function()
---             return " " .. os.date("%I:%M"):gsub("^0", "")
---           end,
---         },
---       },
---     },
---   },
--- }
