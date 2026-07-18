@@ -16,6 +16,21 @@ return {
       words = { enabled = true },
       explorer = { enabled = false },
       dashboard = { enabled = true },
+      zen = {
+        toggles = {
+          dim = false,
+          git_signs = false,
+          mini_diff_signs = false,
+          diagnostics = false,
+        },
+        show = {
+          statusline = false,
+          tabline = false,
+        },
+        win = {
+          backdrop = { transparent = false, blend = 0 },
+        },
+      },
     },
     keys = {
       {

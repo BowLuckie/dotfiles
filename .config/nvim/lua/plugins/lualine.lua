@@ -38,7 +38,7 @@ return {
         lualine_z = {
           function()
             local time = os.date("%I:%M") --[[@as string]]
-            return " " .. time:gsub("^0", "")
+            return " " .. time:gsub("^0", "")
           end,
         },
       },

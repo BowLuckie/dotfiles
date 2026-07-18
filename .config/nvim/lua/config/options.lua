@@ -57,7 +57,6 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 
--- shim for telescope previewer compat with nvim-treesitter main branch
 if not vim.treesitter.language.ft_to_lang then
   vim.treesitter.language.ft_to_lang = function(ft)
     return vim.treesitter.language.get_lang(ft) or ft
