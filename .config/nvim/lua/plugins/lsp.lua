@@ -165,6 +165,16 @@ return {
         clangd = {
           cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
         },
+        yamlls = {
+          filetypes = { "yaml" },
+          settings = {
+            yaml = {
+              schemas = {
+                ["https://json.schemastore.org/clang-format.json"] = "/.clang-format",
+              },
+            },
+          },
+        },
       },
 
       setup = {},

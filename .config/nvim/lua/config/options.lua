@@ -62,3 +62,11 @@ if not vim.treesitter.language.ft_to_lang then
     return vim.treesitter.language.get_lang(ft) or ft
   end
 end
+
+vim.filetype.add({
+  filename = {
+    [".clang-format"] = "yaml",
+    ["_clang-format"] = "yaml",
+    [".clang-tidy"] = "yaml",
+  },
+})

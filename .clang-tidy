@@ -1,0 +1,15 @@
+---
+Checks: >
+  -*,
+  clang-diagnostic-*,
+  bugprone-*,
+  -bugprone-easily-swappable-parameters,
+  performance-*,
+  misc-unused-parameters,
+  misc-unused-using-decls
+
+WarningsAsErrors: ''
+HeaderFilterRegex: ''
+
+CheckOptions: []
+...
