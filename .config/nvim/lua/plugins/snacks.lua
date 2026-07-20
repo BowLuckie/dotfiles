@@ -8,7 +8,11 @@ return {
       indent = { enabled = true },
       input = { enabled = true },
       notifier = { enabled = true },
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        hidden = true,
+        ignored = false,
+      },
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },

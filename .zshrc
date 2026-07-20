@@ -145,3 +145,5 @@ fastfetch_load() {
 if [[ "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "Code" && "$TERM_PROGRAM" != "Zed" && "$TERM" != "xterm-256color" ]]; then
   fastfetch_load
 fi
+
+eval "$(pacman -Qqe > pkglist.txt)"

@@ -42,17 +42,25 @@ local function setup_just_keymaps()
 
   local used = {}
   local function assign_key(recipe)
-    local key = recipe:sub(1, 1):lower()
-    if used[key] then
-      local second = recipe:sub(2, 2):lower()
-      key = (second ~= "" and not used[second]) and second or recipe
+    for i = 1, #recipe do
+      local candidate = recipe:sub(i, i):lower()
+      if candidate:match("%a") and not used[candidate] then
+        used[candidate] = true
+        return candidate
+      end
     end
-    used[key] = true
-    return key
+    used[recipe] = true
+    return recipe
   end
 
+  used["j"] = true
   for _, recipe in ipairs(recipes) do
-    local key = assign_key(recipe)
+    local key
+    if recipe == "default" then
+      key = "j"
+    else
+      key = assign_key(recipe)
+    end
     vim.keymap.set("n", "<leader>j" .. key, function()
       vim.cmd("w")
       local buf = get_or_create_terminal()
