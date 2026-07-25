@@ -1,16 +1,18 @@
-if vim.fn.has("win32") == 1 then
-  vim.opt.shell = '"C:/Program Files/WindowsApps/Microsoft.PowerShell_7.6.2.0_x64__8wekyb3d8bbwe/pwsh.exe"'
-  vim.opt.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
-  vim.opt.shellquote = ""
-  vim.opt.shellxquote = ""
-else
-  vim.opt.clipboard = "unnamedplus"
-end
+vim.opt.clipboard = "unnamedplus"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 vim.opt.wrap = false
+
+vim.opt.incsearch = true
+vim.keymap.set("c", "<Esc>", function()
+  local cmd = vim.fn.getcmdtype()
+  if cmd == "/" or cmd == "?" then
+    return "<CR>"
+  end
+  return "<Esc>"
+end, { expr = true })
 
 vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full"

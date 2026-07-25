@@ -72,7 +72,7 @@ return {
       })
 
       vim.api.nvim_set_hl(0, "@variable.member.python", {
-        link = "@module",
+        fg = palette.faded_aqua,
       })
 
       vim.api.nvim_set_hl(0, "IncSearch", { bg = palette.neutral_orange, fg = palette.dark0 })

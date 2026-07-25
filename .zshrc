@@ -146,4 +146,4 @@ if [[ "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "Code" && "$TERM_PROGRAM
   fastfetch_load
 fi
 
-eval "$(pacman -Qqe > pkglist.txt)"
+eval "$(pacman -Qqe > ~/pkglist.txt)"

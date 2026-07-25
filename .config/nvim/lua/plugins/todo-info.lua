@@ -20,8 +20,16 @@ return {
         end,
         desc = "Prev Todo Comment",
       },
-      { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-      { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+      {
+        "<leader>st",
+        function()
+          Snacks.picker.grep({
+            search = "TODO|FIXME|HACK|WARN|PERF|NOTE",
+            regex = true,
+          })
+        end,
+        desc = "Todo",
+      },
     },
   },
 }

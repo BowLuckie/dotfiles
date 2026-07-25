@@ -56,8 +56,6 @@ return {
       { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub PRs (all)" },
 
       { "<leader>fT", function() Snacks.terminal() end, desc = "Terminal (cwd)" },
-      { "<C-/>", function() Snacks.terminal.focus() end, mode = { "n", "t" }, desc = "Terminal Focus" },
-      { "<C-_>", function() Snacks.terminal.focus() end, mode = { "n", "t" }, desc = "which_key_ignore" },
 
       { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
       { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },

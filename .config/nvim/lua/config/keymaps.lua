@@ -1,6 +1,3 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
 local function map(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
   if opts then
@@ -23,8 +20,6 @@ end, { desc = "Lazygit (root)" })
 vim.keymap.set("n", "<A-J>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 vim.keymap.set("n", "<A-K>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-
 vim.keymap.set({ "n" }, "<leader>z", "<cmd>wa!<cr>", { desc = "Save" })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -36,6 +31,40 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- config/keymaps.lua
+local prev_win = nil
+
+local function get_or_create_terminal()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[buf].buftype == "terminal" then
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_buf(win) == buf then
+          vim.api.nvim_set_current_win(win)
+          return buf
+        end
+      end
+      vim.api.nvim_set_current_buf(buf)
+      return buf
+    end
+  end
+  vim.cmd("term")
+  return vim.api.nvim_get_current_buf()
+end
+
+local function toggle_terminal_focus()
+  if vim.bo.buftype == "terminal" then
+    vim.cmd("stopinsert")
+    if prev_win and vim.api.nvim_win_is_valid(prev_win) then
+      vim.api.nvim_set_current_win(prev_win)
+    end
+  else
+    prev_win = vim.api.nvim_get_current_win()
+    get_or_create_terminal()
+    vim.cmd("startinsert")
+  end
+end
+
+vim.keymap.set({ "n", "t" }, "<C-_>", toggle_terminal_focus, { desc = "Toggle terminal focus" })
 map("n", "<leader>'", function()
   require("core.utils.toggle").surround_quotes()
 end, { desc = "Toggle quotes cur word" })
@@ -239,4 +268,3 @@ vim.keymap.set("n", "<leader>t", function()
   -- no terminal buffer exists, create one
   vim.cmd("term")
 end, { desc = "Toggle Terminal Buffer" })
-
