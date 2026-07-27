@@ -90,7 +90,6 @@ alias .5='cd ../../../../..'
 # Always mkdir a path
 alias mkdir='mkdir -p'
 
-
 export BROWSER=brave
 export XDG_DEFAULT_BROWSER=brave
 
