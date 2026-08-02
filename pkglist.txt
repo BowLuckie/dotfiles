@@ -151,6 +151,7 @@ lightdm-webkit2-greeter
 linux
 linux-firmware
 loupe
+luarocks
 malcontent
 mangohud
 milou
@@ -171,7 +172,9 @@ ocean-sound-theme
 oh-my-posh-bin
 oh-my-zsh-git
 opam
+opencode
 openjpeg
+openmp
 orca
 os-prober
 oxygen

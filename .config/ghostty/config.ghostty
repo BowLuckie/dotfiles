@@ -2,7 +2,7 @@
 command = /usr/bin/zsh
 
 font-family = JetBrainsMono Nerd Font
-font-size = 12
+font-size = 14
 font-style = Bold
 font-feature = calt
 font-feature = liga
