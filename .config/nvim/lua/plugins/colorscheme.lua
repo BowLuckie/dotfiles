@@ -75,6 +75,8 @@ return {
         fg = palette.faded_aqua,
       })
 
+      vim.api.nvim_set_hl(0, "GruvboxFg1", { fg = palette.light2 }) -- #d5c4a1
+
       vim.api.nvim_set_hl(0, "IncSearch", { bg = palette.neutral_orange, fg = palette.dark0 })
       -- selection-background = #d65d0e
       -- selection-foreground = #282828

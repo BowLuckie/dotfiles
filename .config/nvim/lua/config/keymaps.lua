@@ -268,3 +268,5 @@ vim.keymap.set("n", "<leader>t", function()
   -- no terminal buffer exists, create one
   vim.cmd("term")
 end, { desc = "Toggle Terminal Buffer" })
+
+vim.keymap.set("n", "<leader>a", "<cmd>Trouble symbols toggle<cr><C-w>w", { desc = "symbols right" })

@@ -162,9 +162,28 @@ return {
           mason = false,
         },
 
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                typeCheckingMode = "standard",
+                autoImportCompletions = true,
+                diagnosticMode = "openFilesOnly",
+              },
+            },
+          },
+        },
+
         clangd = {
           cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
         },
+
+        old = {
+          cmd = { "ols" },
+          filetypes = { "odin" },
+          mason = false,
+        },
+
         yamlls = {
           filetypes = { "yaml" },
           settings = {
