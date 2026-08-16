@@ -8,11 +8,21 @@ return {
         nerd_font_variant = "mono",
       },
       completion = {
+        accept = { auto_brackets = { enabled = true } },
         ghost_text = { enabled = true },
-        documentation = { auto_show = false },
+        documentation = {
+          auto_show = false,
+          window = {
+            border = "rounded",
+            winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder",
+          },
+        },
         menu = {
+          border = "rounded",
+          winhighlight = "Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection",
           draw = {
             treesitter = { "lsp" },
+            columns = { { "kind_icon" }, { "label", gap = 1 } },
           },
         },
       },
@@ -24,7 +34,12 @@ return {
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
       },
-      signature = { enabled = true },
+      signature = {
+        enabled = true,
+        window = {
+          border = "rounded",
+        },
+      },
     },
     opts_extend = { "sources.default" },
   },

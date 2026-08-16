@@ -36,6 +36,7 @@ efibootmgr
 endeavour
 epiphany
 evtest
+ex-vi-compat
 exo
 eza
 f3
@@ -174,6 +175,7 @@ lightsoff
 linux
 linux-firmware
 linux-headers
+llvm
 loupe
 luarocks
 malcontent

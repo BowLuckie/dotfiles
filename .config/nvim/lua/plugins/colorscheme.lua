@@ -33,10 +33,11 @@ return {
       local palette = require("gruvbox").palette
 
       vim.api.nvim_set_hl(0, "BlinkCmpMenu", { bg = palette.dark1, fg = palette.light1 })
-      vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = palette.dark4 })
+      vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = palette.bright_orange })
       vim.api.nvim_set_hl(0, "BlinkCmpMenuSelection", { bg = palette.dark3 })
       vim.api.nvim_set_hl(0, "BlinkCmpDoc", { bg = palette.dark1, fg = palette.light1 })
-      vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { fg = palette.bright_red })
+      vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { fg = palette.bright_orange })
+      vim.api.nvim_set_hl(0, "BlinkCmpSignatureHelpBorder", { fg = palette.bright_orange })
       vim.api.nvim_set_hl(0, "BlinkCmpKindFunction", { fg = palette.bright_green })
       vim.api.nvim_set_hl(0, "BlinkCmpKindMethod", { fg = palette.bright_green })
       vim.api.nvim_set_hl(0, "BlinkCmpKindVariable", { fg = palette.bright_blue })
@@ -67,15 +68,7 @@ return {
 
       vim.api.nvim_set_hl(0, "MatchParen", { fg = palette.bright_yellow, bold = true })
 
-      vim.api.nvim_set_hl(0, "@variable.python", {
-        link = "Identifier",
-      })
-
-      vim.api.nvim_set_hl(0, "@variable.member.python", {
-        fg = palette.faded_aqua,
-      })
-
-      vim.api.nvim_set_hl(0, "GruvboxFg1", { fg = palette.light2 }) -- #d5c4a1
+      vim.api.nvim_set_hl(0, "GruvboxFg1", { fg = palette.light2 })
 
       vim.api.nvim_set_hl(0, "IncSearch", { bg = palette.neutral_orange, fg = palette.dark0 })
       -- selection-background = #d65d0e

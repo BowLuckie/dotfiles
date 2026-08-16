@@ -137,6 +137,10 @@ return {
           },
         },
 
+        pest_ls = {
+          filetypes = { "pest" },
+        },
+
         arduino_language_server = {
           cmd = {
             "arduino-language-server",
