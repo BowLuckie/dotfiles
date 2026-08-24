@@ -16,6 +16,7 @@ return {
         ocaml = { "ocamlformat" },
         c = { "clang-format" },
         cpp = { "clang-format" },
+        cs = { "csharpier" },
       },
       format_on_save = {
         timeout_ms = 500,

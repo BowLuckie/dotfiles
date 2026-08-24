@@ -31,6 +31,7 @@ diff-so-fancy
 dirb
 discover
 dmidecode
+dotnet-sdk
 drkonqi
 efibootmgr
 endeavour
@@ -126,7 +127,6 @@ gvfs-smb
 gvfs-wsdd
 hollywood
 htop
-hyprland
 hyprpaper
 hyprshutdown
 iagno
@@ -145,6 +145,9 @@ kdeplasma-addons
 keyd
 kgamma
 kglobalacceld
+kicad
+kicad-library
+kicad-library-3d
 kinfocenter
 kitty
 kmenuedit

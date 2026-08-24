@@ -19,7 +19,7 @@ return {
       statuscolumn = { enabled = true },
       words = { enabled = true },
       explorer = { enabled = false },
-      dashboard = { enabled = true },
+      dashboard = { enabled = false },
       zen = {
         toggles = {
           dim = false,

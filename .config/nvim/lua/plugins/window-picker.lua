@@ -8,13 +8,4 @@ return {
       require("window-picker").setup()
     end,
   },
-  {
-    "jiaoshijie/undotree",
-    opts = {
-      -- your options
-    },
-    keys = {
-      { "<leader>o", "<cmd>lua require('undotree').toggle()<cr>", desc = "Toogle undotree" },
-    },
-  },
 }

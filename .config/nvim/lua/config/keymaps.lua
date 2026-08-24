@@ -20,7 +20,7 @@ end, { desc = "Lazygit (root)" })
 vim.keymap.set("n", "<A-J>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 vim.keymap.set("n", "<A-K>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 
-vim.keymap.set({ "n" }, "<leader>z", "<cmd>wa!<cr>", { desc = "Save" })
+vim.keymap.set({ "n" }, "<leader>z", "<cmd>wa<cr>", { desc = "Save" })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "html", "javascript", "css", "json" },
@@ -250,23 +250,61 @@ vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 vim.keymap.set("n", "<leader>t", function()
-  -- look for an existing terminal buffer
+  local terminal_buf
+
+  -- Find our terminal
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.bo[buf].buftype == "terminal" then
-      -- check if it's already open in a window
-      for _, win in ipairs(vim.api.nvim_list_wins()) do
-        if vim.api.nvim_win_get_buf(win) == buf then
-          vim.api.nvim_set_current_win(win)
-          return
-        end
-      end
-      -- exists but not visible, open it in current window
-      vim.api.nvim_set_current_buf(buf)
-      return
+    if vim.api.nvim_buf_is_valid(buf) and vim.b[buf].my_terminal then
+      terminal_buf = buf
+      break
     end
   end
-  -- no terminal buffer exists, create one
-  vim.cmd("term")
+
+  -- If terminal is already visible, focus it
+  if terminal_buf then
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_buf(win) == terminal_buf then
+        vim.api.nvim_set_current_win(win)
+        vim.cmd("startinsert")
+        return
+      end
+    end
+  end
+
+  -- Find a normal window that isn't Neo-tree
+  local target_win
+
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+
+    if vim.bo[buf].filetype ~= "neo-tree" then
+      target_win = win
+      break
+    end
+  end
+
+  -- If we're only in Neo-tree, create a window
+  if not target_win then
+    vim.cmd("botright split")
+    target_win = vim.api.nvim_get_current_win()
+  end
+
+  vim.api.nvim_set_current_win(target_win)
+
+  -- Create terminal if necessary
+  if not terminal_buf then
+    terminal_buf = vim.api.nvim_create_buf(false, true)
+    vim.b[terminal_buf].my_terminal = true
+  end
+
+  vim.api.nvim_set_current_buf(terminal_buf)
+
+  -- Only start a terminal if this buffer doesn't have one
+  if vim.bo[terminal_buf].buftype ~= "terminal" then
+    vim.fn.termopen(vim.o.shell)
+  end
+
+  vim.cmd("startinsert")
 end, { desc = "Toggle Terminal Buffer" })
 
 vim.keymap.set("n", "<leader>a", "<cmd>Trouble symbols toggle<cr><C-w>w", { desc = "symbols right" })

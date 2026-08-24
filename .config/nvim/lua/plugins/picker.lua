@@ -1,6 +1,5 @@
 return {
   "folke/snacks.nvim",
-  opts = {},
   keys = {
       -- stylua: ignore start
       { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },

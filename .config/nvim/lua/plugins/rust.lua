@@ -1,5 +1,4 @@
-return {
-  "mrcjkb/rustaceanvim",
+return { "mrcjkb/rustaceanvim",
   ft = { "rust" },
   opts = {
     tools = {
@@ -28,7 +27,9 @@ return {
           },
           checkOnSave = true,
           diagnostics = {
-            enable = true,
+            disabled = {
+              "inactive-code",
+            },
           },
           procMacro = {
             enable = true,
@@ -65,7 +66,21 @@ return {
         }
       end
     end
-    vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+
+    vim.g.rustaceanvim = vim.tbl_deep_extend("force", vim.g.rustaceanvim or {}, opts or {})
+
+    local original_publish_diagnostics = vim.lsp.handlers["textDocument/publishDiagnostics"]
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+      local filtered_diagnostics = {}
+      for _, diagnostic in ipairs(result.diagnostics) do
+        if diagnostic.code ~= "inactive-code" and not string.find(diagnostic.message, "code is inactive due to") then
+          table.insert(filtered_diagnostics, diagnostic)
+        end
+      end
+      result.diagnostics = filtered_diagnostics
+      original_publish_diagnostics(err, result, ctx, config)
+    end
+
     if vim.fn.executable("rust-analyzer") == 0 then
       vim.notify(
         "rust-analyzer not found in PATH, please install it via Mason or your package manager.\nhttps://rust-analyzer.github.io/",

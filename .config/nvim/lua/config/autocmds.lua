@@ -1,20 +1,24 @@
--- Autocmds are automatically loaded on the VeryLazy event
--- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
---
--- Add any additional autocmds here
--- with `vim.api.nvim_create_autocmd`
---
--- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
--- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
---
+-- Autocmds, loaded directly from init.lua
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    Snacks.picker.files({ hidden = true, ignored = false })
+  end,
+})
 
 local aliases = { "CountLines", "CL", "LC" }
 
 for _, name in ipairs(aliases) do
   vim.api.nvim_create_user_command(name, function(opts)
     local ext = opts.args
-    local result = vim.fn.system(string.format("find . -name '*.%s' -exec cat {} + | wc -l", ext))
-    vim.notify(string.format("*.%s lines: %s", ext, vim.trim(result)), vim.log.levels.INFO)
+    local files = vim.fs.find(function(file)
+      return vim.fn.fnamemodify(file, ":e") == ext
+    end, { limit = math.huge, type = "file", path = vim.fn.getcwd() })
+    local total = 0
+    for _, f in ipairs(files) do
+      total = total + #vim.fn.readfile(f)
+    end
+    vim.notify(string.format("*.%s lines: %d (%d files)", ext, total, #files), vim.log.levels.INFO)
   end, { nargs = 1 })
 end
 

@@ -125,3 +125,4 @@ if [[ "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "Code" && "$TERM_PROGRAM
 fi
 
 eval "$(pacman -Qqe > ~/pkglist.txt)"
+export PATH="$PATH:$HOME/.dotnet/tools"

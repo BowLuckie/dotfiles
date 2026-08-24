@@ -188,6 +188,8 @@ return {
           mason = false,
         },
 
+        csharp_ls = {},
+
         yamlls = {
           filetypes = { "yaml" },
           settings = {
