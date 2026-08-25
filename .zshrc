@@ -68,6 +68,8 @@ alias .5='cd ../../../../..'
 # Always mkdir a path
 alias mkdir='mkdir -p'
 
+alias win='cd /mnt/c/Users/LUCKB23/'
+
 export BROWSER=brave
 export XDG_DEFAULT_BROWSER=brave
 
