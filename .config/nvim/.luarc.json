@@ -1,5 +1,6 @@
 {
     "diagnostics.disable": [
-        "deprecated"
+        "deprecated",
+        "unused-local"
     ]
 }

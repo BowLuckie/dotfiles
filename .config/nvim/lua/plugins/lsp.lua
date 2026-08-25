@@ -155,6 +155,9 @@ return {
           },
           filetypes = { "arduino" },
           mason = false,
+          on_attach = function(client, bufnr)
+            vim.defer_fn(function() end, 300)
+          end,
         },
 
         ocamllsp = {
