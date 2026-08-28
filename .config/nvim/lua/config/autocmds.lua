@@ -1,10 +1,8 @@
--- Autocmds, loaded directly from init.lua
-
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    Snacks.picker.files({ hidden = true, ignored = false })
-  end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--   callback = function()
+--     Snacks.picker.files({ hidden = true, ignored = false })
+--   end,
+-- })
 
 local aliases = { "CountLines", "CL", "LC" }
 

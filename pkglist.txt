@@ -373,6 +373,7 @@ xorg-xdpyinfo
 yay
 yelp
 yt-dlp
+ytfzf
 zram-generator
 zsh
 zsh-autosuggestions
