@@ -6,8 +6,31 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
     keys = { { "S", false, mode = "v" } },
-    config = function()
-      require("nvim-treesitter").setup()
+    opts = {
+      ensure_installed = {
+        "bash",
+        "c",
+        "css",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "ocaml",
+        "python",
+        "rust",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "yaml",
+      },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter").setup(opts)
       vim.api.nvim_create_autocmd("FileType", {
         callback = function(args)
           local ok = pcall(vim.treesitter.start, args.buf)

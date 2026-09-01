@@ -13,6 +13,7 @@ breeze
 breeze-cursors
 breeze-gtk
 breeze-plymouth
+bsd-games
 btop
 catppuccin-gtk-theme-mocha
 cava
@@ -21,6 +22,7 @@ chatty
 cloc
 cmake
 cmatrix
+cool-retro-term
 cowsay
 cpupower
 d-spy

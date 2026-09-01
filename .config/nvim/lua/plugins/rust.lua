@@ -25,6 +25,10 @@ return { "mrcjkb/rustaceanvim",
               enable = true,
             },
           },
+          inlayHints = {
+            parameterHints = { enable = false },
+            chainingHints = { enable = false },
+          },
           checkOnSave = true,
           diagnostics = {
             disabled = {

@@ -191,6 +191,12 @@ return {
           mason = false,
         },
 
+        html = {},
+
+        cssls = {},
+
+        ts_ls = {},
+
         csharp_ls = {},
 
         yamlls = {
