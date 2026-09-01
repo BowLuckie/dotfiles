@@ -128,3 +128,7 @@ fi
 
 eval "$(pacman -Qqe > ~/pkglist.txt)"
 export PATH="$PATH:$HOME/.dotnet/tools"
+
+if command -v tmux >/dev/null 2>&1 && [ -z "$TMUX" ]; then
+    tmux attach-session -t 0 2>/dev/null || tmux new-session
+fi
