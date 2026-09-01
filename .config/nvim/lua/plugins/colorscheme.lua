@@ -71,8 +71,10 @@ return {
       vim.api.nvim_set_hl(0, "GruvboxFg1", { fg = palette.light2 })
 
       vim.api.nvim_set_hl(0, "IncSearch", { bg = palette.neutral_orange, fg = palette.dark0 })
-      -- selection-background = #d65d0e
-      -- selection-foreground = #282828
+
+      for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+        vim.api.nvim_set_hl(0, group, {})
+      end
     end,
   },
 }

@@ -308,3 +308,21 @@ vim.keymap.set("n", "<leader>t", function()
 end, { desc = "Toggle Terminal Buffer" })
 
 vim.keymap.set("n", "<leader>a", "<cmd>Trouble symbols toggle<cr><C-w>w", { desc = "symbols right" })
+
+vim.keymap.set("n", "<leader>R", function()
+  local files = {}
+  local dir = vim.fn.getcwd()
+  local scan = vim.uv.fs_scandir(dir)
+  if scan then
+    while true do
+      local name, typ = vim.uv.fs_scandir_next(scan)
+      if not name then break end
+      if typ == "file" then
+        files[#files + 1] = name
+      end
+    end
+  end
+  if #files > 0 then
+    vim.cmd("edit " .. files[math.random(#files)])
+  end
+end, { desc = "Open random file" })

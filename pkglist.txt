@@ -179,7 +179,6 @@ lightdm-webkit2-greeter
 lightsoff
 linux
 linux-firmware
-linux-headers
 llvm
 loupe
 luarocks
@@ -253,7 +252,6 @@ plymouth-kcm
 polkit-kde-agent
 powerdevil
 print-manager
-proton-ge-custom-bin
 proton-vpn-gtk-app
 python-pip
 qqc2-breeze-style
@@ -282,7 +280,6 @@ smartmontools
 snapshot
 sof-firmware
 spectacle
-spotify
 spotify-player
 starship
 steam
