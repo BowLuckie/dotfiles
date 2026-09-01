@@ -68,7 +68,7 @@ alias .5='cd ../../../../..'
 # Always mkdir a path
 alias mkdir='mkdir -p'
 
-alias win='cd /mnt/c/Users/LUCKB23/'
+alias win='cd /mnt/c/Users/'
 
 export BROWSER=brave
 export XDG_DEFAULT_BROWSER=brave
@@ -98,7 +98,7 @@ bindkey '^[k' up-line-or-history
 bindkey '^[l' forward-char
 
 # Initialize oh-my-posh prompt
-eval "$(oh-my-posh init zsh --config /usr/share/oh-my-posh/themes/gruvbox.json)"
+eval "$(oh-my-posh init zsh --config ~/.dotfiles/oh-my-posh/gruvbox.json)"
 
 
 # BEGIN opam configuration
@@ -106,7 +106,7 @@ eval "$(oh-my-posh init zsh --config /usr/share/oh-my-posh/themes/gruvbox.json)"
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-[[ ! -r '/home/bowluckie/.opam/opam-init/init.zsh' ]] || source '/home/bowluckie/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+[[ ! -r '~/.opam/opam-init/init.zsh' ]] || source '~/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
 
 fastfetch_load() {
@@ -122,7 +122,7 @@ fastfetch_load() {
 
 
 # Show fastfetch on every new terminal, except inside editors
-if [[ "$TERM_PROGRAM" != "vscode" && "$TERM_PROGRAM" != "Code" && "$TERM_PROGRAM" != "Zed" && "$TERM" != "xterm-256color" ]]; then
+if [[ "$TERM_PROGRAM" != "Code" && "$TERM" != "xterm-256color" ]]; then
   fastfetch_load
 fi
 
