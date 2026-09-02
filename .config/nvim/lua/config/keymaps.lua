@@ -20,7 +20,7 @@ end, { desc = "Lazygit (root)" })
 vim.keymap.set("n", "<A-J>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 vim.keymap.set("n", "<A-K>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 
-vim.keymap.set({ "n" }, "<leader>z", "<cmd>wa<cr>", { desc = "Save" })
+vim.keymap.set({ "n" }, "<leader>z", "<cmd>wa!<cr>", { desc = "Save" })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "html", "javascript", "css", "json" },
@@ -316,7 +316,9 @@ vim.keymap.set("n", "<leader>R", function()
   if scan then
     while true do
       local name, typ = vim.uv.fs_scandir_next(scan)
-      if not name then break end
+      if not name then
+        break
+      end
       if typ == "file" then
         files[#files + 1] = name
       end

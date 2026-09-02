@@ -63,6 +63,7 @@ gimp
 git
 git-delta
 git-filter-repo
+git-lfs
 github-cli
 gnome-backgrounds
 gnome-boxes
@@ -373,6 +374,7 @@ yay
 yelp
 yt-dlp
 ytfzf
+zoxide
 zram-generator
 zsh
 zsh-autosuggestions

@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "zoxide.vim": {
+      "rev": "d4c3d088a70a4edae9def6209644c092f4221fe5",
+      "src": "https://github.com/nanotee/zoxide.vim"
+    }
+  }
+}
