@@ -8,6 +8,7 @@ base-devel
 bear
 bluedevil
 blueman
+box2d
 brave-bin
 breeze
 breeze-cursors
@@ -33,6 +34,8 @@ diff-so-fancy
 dirb
 discover
 dmidecode
+docker
+docker-buildx
 dotnet-sdk
 drkonqi
 efibootmgr
@@ -50,6 +53,7 @@ figlet
 file-roller
 flatpak-kcm
 fortune-mod
+fuck
 fuse2
 fzf
 gamemode
@@ -297,6 +301,7 @@ thunar
 thunar-archive-plugin
 thunar-media-tags-plugin
 thunar-volman
+tiled
 timg
 tree-sitter-cli
 ttf-jetbrains-mono
