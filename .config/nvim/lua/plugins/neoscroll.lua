@@ -1,6 +1,6 @@
 return {
-  "karb94/neoscroll.nvim",
-  opts = {
-    easing = "quadratic",
-  },
+  -- "karb94/neoscroll.nvim",
+  -- opts = {
+  --   easing = "quadratic",
+  -- },
 }

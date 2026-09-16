@@ -1,27 +1,11 @@
 local just_keymap_keys = {}
+local terminal = require("config.terminal")
 
 local function clear_just_keymaps()
   for _, key in ipairs(just_keymap_keys) do
     pcall(vim.keymap.del, "n", "<leader>j" .. key)
   end
   just_keymap_keys = {}
-end
-
-local function get_or_create_terminal()
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.bo[buf].buftype == "terminal" then
-      for _, win in ipairs(vim.api.nvim_list_wins()) do
-        if vim.api.nvim_win_get_buf(win) == buf then
-          vim.api.nvim_set_current_win(win)
-          return buf
-        end
-      end
-      vim.api.nvim_set_current_buf(buf)
-      return buf
-    end
-  end
-  vim.cmd("term")
-  return vim.api.nvim_get_current_buf()
 end
 
 local function setup_just_keymaps()
@@ -62,8 +46,10 @@ local function setup_just_keymaps()
       key = assign_key(recipe)
     end
     vim.keymap.set("n", "<leader>j" .. key, function()
-      vim.cmd("w")
-      local buf = get_or_create_terminal()
+      if vim.bo.filetype ~= "dashboard" and vim.fn.expand("%") ~= "" then
+        vim.cmd("w")
+      end
+      local buf = terminal.get_or_create_terminal()
       local job_id = vim.b[buf].terminal_job_id
       if job_id then
         vim.api.nvim_chan_send(job_id, "just " .. recipe .. "\r")

@@ -37,6 +37,7 @@ dmidecode
 docker
 docker-buildx
 dotnet-sdk
+downgrade
 drkonqi
 efibootmgr
 endeavour
@@ -184,9 +185,11 @@ lightdm-webkit2-greeter
 lightsoff
 linux
 linux-firmware
+lld
 llvm
 loupe
 luarocks
+lumafly
 malcontent
 mangohud
 manuals
@@ -227,6 +230,7 @@ parole
 paru
 paru-debug
 pavucontrol
+perf
 picard
 picocom
 pipewire
@@ -257,7 +261,6 @@ plymouth-kcm
 polkit-kde-agent
 powerdevil
 print-manager
-proton-vpn-gtk-app
 python-pip
 qqc2-breeze-style
 qt6-multimedia-ffmpeg
