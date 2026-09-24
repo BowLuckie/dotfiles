@@ -1,6 +1,7 @@
 ZSH=/usr/share/oh-my-zsh/
 ZSH_CUSTOM="/usr/share/oh-my-zsh/custom"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#a89984"
+ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
 
 plugins=(
     git
@@ -13,6 +14,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 export LIBINPUT_MODEL_NATURAL_SCROLL=1
+export INTEL_XE_IGNORE_EXPERIMENTAL_WARNING=1
 export EDITOR="nvim"
 export VISUAL="nvim"
 
@@ -54,8 +56,8 @@ alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 
 alias mkdir='mkdir -p'
-
 alias win='cd /mnt/c/Users/'
+alias svim='sudo -E nvim'
 
 export BROWSER=brave
 export XDG_DEFAULT_BROWSER=brave

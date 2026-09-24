@@ -1,13 +1,5 @@
 local terminal = require("config.terminal")
 
-local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
-  if opts then
-    options = vim.tbl_extend("force", options, opts)
-  end
-  vim.keymap.set(mode, lhs, rhs, options)
-end
-
 vim.keymap.set("n", "<F5>", "<cmd>DapContinue<cr>", { desc = "Debug: Continue" })
 
 vim.keymap.set("i", "<A-h>", "<Left>", { desc = "Move left" })
@@ -33,7 +25,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-local prev_win = nil
+local prev_win
 
 local function toggle_terminal_focus()
   if vim.bo.buftype == "terminal" then
@@ -49,9 +41,15 @@ local function toggle_terminal_focus()
 end
 
 vim.keymap.set({ "n", "t" }, "<C-_>", toggle_terminal_focus, { desc = "Toggle terminal focus" })
-map("n", "<leader>'", function()
+
+vim.keymap.set("n", "<leader>'", function()
   require("core.utils.toggle").surround_quotes()
 end, { desc = "Toggle quotes cur word" })
+
+vim.keymap.set("n", "<leader>t", function()
+  terminal.get_or_create_terminal()
+  vim.cmd("startinsert")
+end, { desc = "Toggle Terminal Buffer" })
 
 -- better up/down
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -233,63 +231,6 @@ vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
-vim.keymap.set("n", "<leader>t", function()
-  local terminal_buf
-
-  -- Find our terminal
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_valid(buf) and vim.b[buf].my_terminal then
-      terminal_buf = buf
-      break
-    end
-  end
-
-  -- If terminal is already visible, focus it
-  if terminal_buf then
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      if vim.api.nvim_win_get_buf(win) == terminal_buf then
-        vim.api.nvim_set_current_win(win)
-        vim.cmd("startinsert")
-        return
-      end
-    end
-  end
-
-  -- Find a normal window that isn't Neo-tree
-  local target_win
-
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-
-    if vim.bo[buf].filetype ~= "neo-tree" then
-      target_win = win
-      break
-    end
-  end
-
-  -- If we're only in Neo-tree, create a window
-  if not target_win then
-    vim.cmd("botright split")
-    target_win = vim.api.nvim_get_current_win()
-  end
-
-  vim.api.nvim_set_current_win(target_win)
-
-  -- Create terminal if necessary
-  if not terminal_buf then
-    terminal_buf = vim.api.nvim_create_buf(false, true)
-    vim.b[terminal_buf].my_terminal = true
-  end
-
-  vim.api.nvim_set_current_buf(terminal_buf)
-
-  -- Only start a terminal if this buffer doesn't have one
-  if vim.bo[terminal_buf].buftype ~= "terminal" then
-    vim.fn.termopen(vim.o.shell)
-  end
-
-  vim.cmd("startinsert")
-end, { desc = "Toggle Terminal Buffer" })
 
 vim.keymap.set("n", "<leader>a", "<cmd>Trouble symbols toggle<cr><C-w>w", { desc = "symbols right" })
 
@@ -312,3 +253,7 @@ vim.keymap.set("n", "<leader>R", function()
     vim.cmd("edit " .. files[math.random(#files)])
   end
 end, { desc = "Open random file" })
+
+vim.keymap.set("n", "<leader>T", function()
+  vim.cmd("term")
+end, { desc = "New Terminal Buffer" })

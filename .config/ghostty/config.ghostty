@@ -1,5 +1,6 @@
-
 command = /usr/bin/zsh
+
+window-vsync = true
 
 font-family = JetBrainsMono Nerd Font
 font-size = 13

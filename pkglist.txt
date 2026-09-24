@@ -1,5 +1,6 @@
 alsa-utils
 arduino-cli
+audacity
 aurorae
 balena-etcher
 baobab
@@ -63,6 +64,7 @@ garcon
 gdm
 gdm-settings
 ghex
+ghidra
 ghostty
 gimp
 git
@@ -135,6 +137,8 @@ gvfs-smb
 gvfs-wsdd
 hollywood
 htop
+hugo
+hyprland
 hyprpaper
 hyprshutdown
 iagno
@@ -142,6 +146,7 @@ inotify-tools
 intel-gpu-tools
 intel-media-driver
 intel-ucode
+ispell
 iwd
 jdk-openjdk
 just
@@ -175,6 +180,7 @@ layer-shell-qt
 lazygit
 lib32-gamemode
 lib32-vulkan-intel
+libinput-tools
 libkscreen
 libksysguard
 libplasma
@@ -189,7 +195,6 @@ lld
 llvm
 loupe
 luarocks
-lumafly
 malcontent
 mangohud
 manuals
@@ -206,8 +211,11 @@ neovide
 neovim
 network-manager-applet
 networkmanager
+nginx
+nmap
 noto-fonts
 npm
+nvidia-prime
 ocean-sound-theme
 odin
 oh-my-posh-bin
@@ -261,6 +269,7 @@ plymouth-kcm
 polkit-kde-agent
 powerdevil
 print-manager
+protonup-qt
 python-pip
 qqc2-breeze-style
 qt6-multimedia-ffmpeg
@@ -306,6 +315,7 @@ thunar-media-tags-plugin
 thunar-volman
 tiled
 timg
+tldr
 tree-sitter-cli
 ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd
@@ -378,6 +388,7 @@ xfconf
 xfdesktop
 xfwm4
 xorg-xdpyinfo
+xorg-xinput
 yay
 yelp
 yt-dlp
