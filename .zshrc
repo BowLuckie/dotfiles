@@ -1,7 +1,6 @@
 ZSH=/usr/share/oh-my-zsh/
 ZSH_CUSTOM="/usr/share/oh-my-zsh/custom"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#a89984"
-ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
 
 plugins=(
     git
@@ -12,6 +11,7 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 
+ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
 
 export LIBINPUT_MODEL_NATURAL_SCROLL=1
 export INTEL_XE_IGNORE_EXPERIMENTAL_WARNING=1

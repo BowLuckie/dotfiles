@@ -89,7 +89,7 @@ vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+-- vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 vim.keymap.set("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
 -- Clear search and stop snippet on escape
@@ -231,7 +231,6 @@ vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
-
 vim.keymap.set("n", "<leader>a", "<cmd>Trouble symbols toggle<cr><C-w>w", { desc = "symbols right" })
 
 vim.keymap.set("n", "<leader>R", function()
@@ -257,3 +256,29 @@ end, { desc = "Open random file" })
 vim.keymap.set("n", "<leader>T", function()
   vim.cmd("term")
 end, { desc = "New Terminal Buffer" })
+
+vim.keymap.set("n", "<leader>`", function()
+  local terminals = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == "terminal" then
+      table.insert(terminals, buf)
+    end
+  end
+
+  if #terminals == 0 then
+    vim.notify("No terminal buffers open", vim.log.levels.WARN)
+    return
+  end
+
+  local cur_buf = vim.api.nvim_get_current_buf()
+  local cur_idx = 1
+  for i, buf in ipairs(terminals) do
+    if buf == cur_buf then
+      cur_idx = i
+      break
+    end
+  end
+
+  local next_buf = terminals[(cur_idx % #terminals) + 1]
+  vim.api.nvim_set_current_buf(next_buf)
+end, { desc = "Cycle Terminal Buffers" })

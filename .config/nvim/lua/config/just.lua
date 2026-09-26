@@ -1,73 +1,129 @@
-local just_keymap_keys = {}
+local build_keymap_keys = {}
 local terminal = require("config.terminal")
 
-local function clear_just_keymaps()
-  for _, key in ipairs(just_keymap_keys) do
+local function clear_build_keymaps()
+  for _, key in ipairs(build_keymap_keys) do
     pcall(vim.keymap.del, "n", "<leader>j" .. key)
   end
-  just_keymap_keys = {}
+  build_keymap_keys = {}
 end
 
-local function setup_just_keymaps()
-  clear_just_keymaps()
+local function get_build_files()
+  local files = {}
 
-  local file = vim.fn.findfile("justfile", ".;") --[[@as string]]
-  if file == "" then
-    return
+  local justfile = vim.fn.findfile("justfile", ".;")
+  if justfile ~= "" then
+    table.insert(files, { file = justfile, tool = "just" })
   end
 
-  local recipes = {}
+  local makefile = vim.fn.findfile("Makefile", ".;")
+  if makefile == "" then
+    makefile = vim.fn.findfile("makefile", ".;")
+  end
+
+  if makefile ~= "" then
+    table.insert(files, { file = makefile, tool = "make" })
+  end
+
+  return files
+end
+
+local function get_targets(file, tool)
+  local targets = {}
+
   for line in io.lines(file) do
-    local recipe = line:match("^([%w_-]+):")
-    if recipe then
-      table.insert(recipes, recipe)
+    local target
+
+    if tool == "just" then
+      target = line:match("^([%w_-]+):")
+    else
+      target = line:match("^([%w_%.%-]+)%s*:")
+    end
+
+    if target then
+      table.insert(targets, target)
     end
   end
 
-  local used = {}
-  local function assign_key(recipe)
-    for i = 1, #recipe do
-      local candidate = recipe:sub(i, i):lower()
+  return targets
+end
+
+local function setup_build_keymaps()
+  clear_build_keymaps()
+
+  local build_files = get_build_files()
+  if #build_files == 0 then
+    return
+  end
+
+  local used = {
+    j = true,
+  }
+
+  local function assign_key(target)
+    for i = 1, #target do
+      local candidate = target:sub(i, i):lower()
+
       if candidate:match("%a") and not used[candidate] then
         used[candidate] = true
         return candidate
       end
     end
-    used[recipe] = true
-    return recipe
+
+    return nil
   end
 
-  used["j"] = true
-  for _, recipe in ipairs(recipes) do
-    local key
-    if recipe == "default" then
-      key = "j"
-    else
-      key = assign_key(recipe)
+  for _, build in ipairs(build_files) do
+    local targets = get_targets(build.file, build.tool)
+
+    for _, target in ipairs(targets) do
+      local key
+
+      if target == "default" or target == "all" then
+        key = "j"
+      else
+        key = assign_key(target)
+      end
+
+      if key then
+        vim.keymap.set("n", "<leader>j" .. key, function()
+          if vim.bo.filetype ~= "dashboard" and vim.fn.expand("%") ~= "" then
+            vim.cmd("w")
+          end
+
+          local buf = terminal.get_or_create_terminal()
+          local job_id = vim.b[buf].terminal_job_id
+
+          if job_id then
+            vim.api.nvim_chan_send(job_id, build.tool .. " " .. target .. "\r")
+          end
+
+          vim.cmd("startinsert")
+        end, {
+          desc = build.tool .. " " .. target,
+        })
+
+        table.insert(build_keymap_keys, key)
+      end
     end
-    vim.keymap.set("n", "<leader>j" .. key, function()
-      if vim.bo.filetype ~= "dashboard" and vim.fn.expand("%") ~= "" then
-        vim.cmd("w")
-      end
-      local buf = terminal.get_or_create_terminal()
-      local job_id = vim.b[buf].terminal_job_id
-      if job_id then
-        vim.api.nvim_chan_send(job_id, "just " .. recipe .. "\r")
-      end
-      vim.cmd("startinsert")
-    end, { desc = "just " .. recipe })
-    table.insert(just_keymap_keys, key)
   end
 end
 
-vim.api.nvim_create_user_command("JustKeymapsReload", setup_just_keymaps, {})
+vim.api.nvim_create_user_command("BuildKeymapsReload", setup_build_keymaps, {})
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-  pattern = "justfile",
-  callback = setup_just_keymaps,
+  pattern = {
+    "justfile",
+    "Makefile",
+    "makefile",
+  },
+  callback = setup_build_keymaps,
 })
-vim.api.nvim_create_autocmd("DirChanged", { callback = setup_just_keymaps })
 
-vim.keymap.set("n", "<leader>jR", "<cmd>JustKeymapsReload<CR>", { desc = "reload just keymaps" })
+vim.api.nvim_create_autocmd("DirChanged", {
+  callback = setup_build_keymaps,
+})
 
-setup_just_keymaps()
+vim.keymap.set("n", "<leader>jR", "<cmd>BuildKeymapsReload<CR>", { desc = "reload build keymaps" })
+
+setup_build_keymaps()

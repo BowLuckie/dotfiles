@@ -116,6 +116,11 @@ return {
           },
         },
 
+        asm_lsp = {
+          cmd = { "asm-lsp" },
+          filetypes = { "nasm", "asm", "s", "S" },
+        },
+
         lua_ls = {
           settings = {
             Lua = {

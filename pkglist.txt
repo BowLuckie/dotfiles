@@ -204,6 +204,7 @@ mousepad
 mp3tag
 mpv
 nano
+nasm
 nautilus
 nautilus-open-any-terminal
 ncmpcpp
